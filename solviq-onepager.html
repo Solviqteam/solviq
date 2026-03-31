@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solviq — Web Solutions for Hotels</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0f0f;
+    --ink-mid: #3a3a3a;
+    --ink-muted: #888;
+    --accent: #1a6bff;
+    --accent-light: #e8f0ff;
+    --accent-dark: #0d4bcc;
+    --sand: #f9f7f4;
+    --border: #e8e4df;
+    --white: #ffffff;
+    --green: #12a05c;
+    --green-light: #e6f7ef;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .page {
+    background: var(--white);
+    width: 100%;
+    max-width: 720px;
+    border: 1px solid var(--border);
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--ink);
+    padding: 2.5rem 3rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .logo-mark {
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: white;
+  }
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: white; letter-spacing: 0.02em;
+  }
+  .header-right { text-align: right; }
+  .header-tagline {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 0.3rem;
+  }
+  .header-contact {
+    font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.7;
+  }
+  .header-contact a { color: var(--accent); text-decoration: none; }
+
+  /* HERO BAND */
+  .hero-band {
+    background: var(--accent);
+    padding: 1.8rem 3rem;
+  }
+  .hero-band h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 600; color: white; line-height: 1.25;
+    margin-bottom: 0.5rem;
+  }
+  .hero-band p {
+    font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.6;
+    max-width: 480px;
+  }
+
+  /* DEMO STRIP */
+  .demo-strip {
+    background: var(--accent-light);
+    border-bottom: 1px solid #c8d8ff;
+    padding: 0.9rem 3rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .demo-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0;
+  }
+  .demo-strip span {
+    font-size: 0.82rem; color: var(--accent-dark); font-weight: 500;
+  }
+  .demo-strip a {
+    color: var(--accent-dark); font-weight: 500; font-size: 0.82rem;
+    text-decoration: underline; text-underline-offset: 2px;
+  }
+
+  /* BODY */
+  .body { padding: 2.5rem 3rem; }
+
+  /* PACKAGES */
+  .section-label {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-muted);
+    margin-bottom: 1.2rem;
+  }
+  .packages { display: flex; flex-direction: column; gap: 1px; margin-bottom: 2.5rem; border: 1px solid var(--border); }
+
+  .pkg {
+    background: var(--white);
+    padding: 1.4rem 1.6rem;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 1.5rem;
+    align-items: start;
+    position: relative;
+  }
+  .pkg:last-child { border-bottom: none; }
+  .pkg.featured { background: var(--ink); }
+
+  .pkg-badge {
+    position: absolute; top: 1.4rem; right: 1.6rem;
+    font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.25rem 0.7rem;
+    background: var(--accent); color: white;
+  }
+  .pkg-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--ink); margin-bottom: 0.3rem;
+  }
+  .pkg.featured .pkg-name { color: white; }
+  .pkg-desc {
+    font-size: 0.8rem; color: var(--ink-muted); line-height: 1.6;
+    grid-column: 1;
+  }
+  .pkg.featured .pkg-desc { color: rgba(255,255,255,0.6); }
+  .pkg-features {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    grid-column: 1; margin-top: 0.7rem;
+  }
+  .feat-tag {
+    font-size: 0.68rem; padding: 0.2rem 0.6rem;
+    background: var(--sand); color: var(--ink-mid);
+    border: 1px solid var(--border);
+  }
+  .pkg.featured .feat-tag {
+    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .pkg-price-wrap {
+    grid-row: 1 / 4; grid-column: 2;
+    text-align: right; padding-top: 0.1rem;
+    padding-right: 5rem;
+  }
+  .pkg-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--accent); line-height: 1;
+  }
+  .pkg.featured .pkg-price { color: white; }
+  .pkg-price-note {
+    font-size: 0.68rem; color: var(--ink-muted); margin-top: 0.2rem;
+  }
+  .pkg.featured .pkg-price-note { color: rgba(255,255,255,0.5); }
+
+  /* ADD-ONS */
+  .addons { margin-bottom: 2.5rem; }
+  .addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: 1px solid var(--border); }
+  .addon-item {
+    padding: 1rem 1.2rem;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .addon-item:nth-child(even) { border-right: none; }
+  .addon-name { font-size: 0.85rem; font-weight: 500; color: var(--ink); }
+  .addon-sub { font-size: 0.72rem; color: var(--ink-muted); margin-top: 0.15rem; }
+  .addon-price { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--accent); white-space: nowrap; }
+
+  /* WHY */
+  .why { margin-bottom: 2.5rem; }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .why-item {
+    background: var(--sand); border: 1px solid var(--border);
+    padding: 1.2rem; text-align: center;
+  }
+  .why-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--accent);
+    line-height: 1; margin-bottom: 0.4rem;
+  }
+  .why-label { font-size: 0.78rem; color: var(--ink-mid); line-height: 1.4; }
+
+  /* PROCESS */
+  .process { margin-bottom: 2.5rem; }
+  .process-steps { display: flex; gap: 0; border: 1px solid var(--border); }
+  .step {
+    flex: 1; padding: 1.2rem; border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .step:last-child { border-right: none; }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: white;
+    font-size: 0.75rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 0.6rem;
+  }
+  .step-name { font-size: 0.78rem; font-weight: 500; color: var(--ink); margin-bottom: 0.25rem; }
+  .step-desc { font-size: 0.7rem; color: var(--ink-muted); line-height: 1.5; }
+
+  /* GUARANTEE */
+  .guarantee {
+    background: var(--green-light);
+    border: 1px solid #a8e5c8;
+    padding: 1.2rem 1.6rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .guarantee-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .guarantee-text h4 { font-size: 0.85rem; font-weight: 500; color: var(--green); margin-bottom: 0.2rem; }
+  .guarantee-text p { font-size: 0.78rem; color: #1a6b45; line-height: 1.6; }
+
+  /* CTA */
+  .cta-band {
+    background: var(--ink);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .cta-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 0.3rem;
+  }
+  .cta-text p { font-size: 0.8rem; color: rgba(255,255,255,0.55); }
+  .cta-contact { text-align: right; }
+  .cta-contact a {
+    display: block; font-size: 0.85rem;
+    color: rgba(255,255,255,0.8); text-decoration: none; line-height: 1.8;
+  }
+  .cta-contact a:hover { color: var(--accent); }
+  .cta-contact .cta-email {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem; font-weight: 600; color: white;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 1rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-left { font-size: 0.7rem; color: var(--ink-muted); }
+  .footer-right { font-size: 0.7rem; color: var(--ink-muted); }
+
+  @media (max-width: 600px) {
+    .header { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+    .header-right { text-align: left; }
+    .hero-band { padding: 1.5rem; }
+    .body { padding: 1.5rem; }
+    .demo-strip { padding: 0.9rem 1.5rem; }
+    .pkg { grid-template-columns: 1fr; }
+    .pkg-price-wrap { grid-row: auto; grid-column: 1; text-align: left; padding-right: 0; padding-bottom: 0.5rem; }
+    .pkg-badge { position: static; display: inline-block; margin-bottom: 0.5rem; }
+    .addon-grid { grid-template-columns: 1fr; }
+    .addon-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .addon-item:last-child { border-bottom: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    .process-steps { flex-direction: column; }
+    .step { border-right: none; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .cta-band { flex-direction: column; padding: 1.5rem; }
+    .cta-contact { text-align: left; }
+    .footer { flex-direction: column; gap: 0.3rem; padding: 1rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-mark">
+      <div class="logo-icon">S</div>
+      <span class="logo-text">Solviq</span>
+    </div>
+    <div class="header-right">
+      <p class="header-tagline">Web Solutions for Hotels</p>
+      <div class="header-contact">
+        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="285b47445e4159065f4d4a684f45494144064b4745">[email&#160;protected]</a><br>
+        Line / WhatsApp: +66 XX XXX XXXX
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO BAND -->
+  <div class="hero-band">
+    <h1>A professional website for your property — ready in 7 days.</h1>
+    <p>Most hotel websites are outdated, slow, or non-existent. We build fast, mobile-friendly sites that bring in direct bookings — no hidden fees, no commissions, no lock-in.</p>
+  </div>
+
+  <!-- DEMO STRIP -->
+  <div class="demo-strip">
+    <div class="demo-dot"></div>
+    <span>See a live demo of what your site could look like →</span>
+    <a href="#">solviq.github.io/hotel-demo</a>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- PACKAGES -->
+    <p class="section-label">Packages</p>
+    <div class="packages">
+
+      <div class="pkg">
+        <div class="pkg-price-wrap">
+          <div class="pkg-price">฿2,000</div>
+          <div class="pkg-price-note">one-time</div>
+        </div>
+        <div class="pkg-name">Starter Site</div>
+        <div class="pkg-desc">A clean, mobile-friendly website with your photos, rooms, rates, and contact info. Perfect for guesthouses getting online for the first time.</div>
+        <div class="pkg-features">
+          <span class="feat-tag">5 pages</span>
+          <span class="feat-tag">Mobile-ready</span>
+          <span class="feat-tag">Google Maps</span>
+          <span class="feat-tag">Contact form</span>
+          <span class="feat-tag">Delivered in 5 days</span>
+        </div>
+      </div>
+
+      <div class="pkg featured">
+        <span class="pkg-badge">Most Popular</span>
+        <div class="pkg-price-wrap">
+          <div class="pkg-price">฿3,000</div>
+          <div class="pkg-price-note">one-time</div>
+        </div>
+        <div class="pkg-name">Booking Site</div>
+        <div class="pkg-desc">Everything in Starter, plus a direct booking enquiry form — so guests can request dates without going through third-party platforms.</div>
+        <div class="pkg-features">
+          <span class="feat-tag">7 pages</span>
+          <span class="feat-tag">Booking form</span>
+          <span class="feat-tag">Room showcase</span>
+          <span class="feat-tag">Gallery</span>
+          <span class="feat-tag">Delivered in 7 days</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ADD-ONS -->
+    <p class="section-label">Add-ons</p>
+    <div class="addons">
+      <div class="addon-grid">
+        <div class="addon-item">
+          <div>
+            <div class="addon-name">Monthly Care Plan</div>
+            <div class="addon-sub">Updates, edits, uptime monitoring</div>
+          </div>
+          <div class="addon-price">฿500/mo</div>
+        </div>
+        <div class="addon-item">
+          <div>
+            <div class="addon-name">Google Maps Setup</div>
+            <div class="addon-sub">Verified listing + photo upload</div>
+          </div>
+          <div class="addon-price">฿600</div>
+        </div>
+        <div class="addon-item">
+          <div>
+            <div class="addon-name">Basic SEO</div>
+            <div class="addon-sub">Show up on Google searches</div>
+          </div>
+          <div class="addon-price">฿800</div>
+        </div>
+        <div class="addon-item">
+          <div>
+            <div class="addon-name">Thai Language Version</div>
+            <div class="addon-sub">Full site translated to Thai</div>
+          </div>
+          <div class="addon-price">฿500</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY -->
+    <p class="section-label">Why it matters</p>
+    <div class="why">
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-num">73%</div>
+          <div class="why-label">of travellers research hotels on mobile before booking</div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">15%</div>
+          <div class="why-label">commission taken by booking platforms per reservation</div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">7</div>
+          <div class="why-label">days to go from no website to fully live online</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <p class="section-label">How it works</p>
+    <div class="process">
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-name">You share info</div>
+          <div class="step-desc">Photos, room details, pricing — via Line or email</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-name">We build it</div>
+          <div class="step-desc">First draft ready within 3–4 days for your review</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-name">You approve</div>
+          <div class="step-desc">Revisions until you're happy — included in price</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-name">Goes live</div>
+          <div class="step-desc">Site is published and yours to keep</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUARANTEE -->
+    <div class="guarantee">
+      <div class="guarantee-icon">✓</div>
+      <div class="guarantee-text">
+        <h4>Satisfaction guarantee</h4>
+        <p>If you're not happy with the first draft, we revise it for free until you are. No payment until you approve the design. Zero risk to you.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div class="cta-text">
+      <h3>Ready to get your property online?</h3>
+      <p>Reply to this email or message us on Line — we'll get started within 24 hours.</p>
+    </div>
+    <div class="cta-contact">
+      <a href="/cdn-cgi/l/email-protection#0a7965667c637b247d6f684a6d676b636624696567" class="cta-email"><span class="__cf_email__" data-cfemail="d3a0bcbfa5baa2fda4b6b193b4beb2babffdb0bcbe">[email&#160;protected]</span></a>
+      <a href="#">Line: @solviq</a>
+      <a href="#">Wha

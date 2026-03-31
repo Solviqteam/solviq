@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seabreeze Resort — Phuket</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand: #f5efe6;
+    --sand-dark: #e8ddd0;
+    --ocean: #1a4a5c;
+    --ocean-mid: #2a6b82;
+    --ocean-light: #4a9ab5;
+    --coral: #c96a3a;
+    --coral-light: #e8845a;
+    --gold: #b8963e;
+    --white: #fdfaf7;
+    --text: #1c1a17;
+    --text-muted: #6b5f52;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(253,250,247,0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    padding: 0.9rem 3rem;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    transition: color 0.4s;
+    text-decoration: none;
+  }
+  nav.scrolled .nav-logo { color: var(--ocean); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-links a { color: var(--text-muted); }
+  .nav-links a:hover { color: var(--coral-light) !important; }
+  .nav-book {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--coral);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+  }
+  nav.scrolled .nav-book { color: var(--white); }
+  .nav-book:hover { background: var(--coral-light); }
+
+  /* HERO */
+  .hero {
+    height: 100vh; min-height: 680px;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(10,30,45,0.45) 0%, rgba(10,30,45,0.2) 50%, rgba(10,30,45,0.55) 100%),
+      linear-gradient(135deg, #1a4a5c 0%, #2a6b82 35%, #4a9ab5 60%, #7ec8d8 80%, #b8e0e8 100%);
+    animation: oceanShift 12s ease-in-out infinite alternate;
+  }
+  @keyframes oceanShift {
+    0% { filter: hue-rotate(0deg) brightness(1); }
+    100% { filter: hue-rotate(8deg) brightness(1.05); }
+  }
+  .hero-waves {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; color: var(--white);
+    padding: 0 1.5rem;
+    animation: fadeUp 1.2s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 1.2rem;
+    animation: fadeUp 1.2s 0.1s ease both;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.3rem;
+    animation: fadeUp 1.2s 0.2s ease both;
+  }
+  .hero-title em { font-style: italic; color: rgba(255,255,255,0.85); }
+  .hero-sub {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1.2s 0.3s ease both;
+  }
+  .hero-cta {
+    display: inline-flex; gap: 1rem;
+    animation: fadeUp 1.2s 0.4s ease both;
+  }
+  .btn-primary {
+    background: var(--coral);
+    color: var(--white);
+    border: none;
+    padding: 0.9rem 2.2rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--coral-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 0.9rem 2.2rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+  /* BOOKING BAR */
+  .booking-bar {
+    background: var(--ocean);
+    padding: 1.5rem 3rem;
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+    justify-content: center;
+  }
+  .booking-field {
+    display: flex; flex-direction: column;
+    padding: 0.5rem 2rem;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    min-width: 160px;
+  }
+  .booking-field:last-of-type { border-right: none; }
+  .booking-field label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 0.3rem;
+  }
+  .booking-field input, .booking-field select {
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 400;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  .booking-field select option { background: var(--ocean); color: var(--white); }
+  .booking-field input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; }
+  .btn-search {
+    background: var(--coral);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2.5rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+  .btn-search:hover { background: var(--coral-light); }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+  .section-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ocean);
+    margin-bottom: 1.2rem;
+  }
+  .section-title em { font-style: italic; }
+  .section-body {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    max-width: 520px;
+  }
+
+  /* ABOUT */
+  .about { background: var(--sand); }
+  .about-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .about-visual {
+    position: relative; height: 480px;
+  }
+  .about-img-main {
+    position: absolute; top: 0; left: 0;
+    width: 75%; height: 85%;
+    background: linear-gradient(135deg, #2a6b82, #4a9ab5, #7ec8d8);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .about-img-main::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,74,92,0.5), transparent 60%);
+  }
+  .about-img-accent {
+    position: absolute; bottom: 0; right: 0;
+    width: 55%; height: 50%;
+    background: linear-gradient(135deg, #c96a3a, #e8845a);
+    border-radius: 2px;
+    border: 6px solid var(--sand);
+  }
+  .about-badge {
+    position: absolute; top: 50%; left: 60%;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    z-index: 2;
+  }
+  .about-badge-num {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--ocean);
+    line-height: 1;
+  }
+  .about-badge-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.3rem;
+  }
+  .features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem;
+  }
+  .feature-item {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+  }
+  .feature-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--coral); flex-shrink: 0; margin-top: 0.45rem;
+  }
+  .feature-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* ROOMS */
+  .rooms { background: var(--white); }
+  .rooms-inner { max-width: 1200px; margin: 0 auto; }
+  .rooms-header { text-align: center; margin-bottom: 3.5rem; }
+  .rooms-header .section-body { margin: 0 auto; text-align: center; }
+  .rooms-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+  }
+  .room-card {
+    background: var(--white);
+    border: 1px solid var(--sand-dark);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .room-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,74,92,0.12); }
+  .room-img {
+    height: 220px;
+    position: relative; overflow: hidden;
+  }
+  .room-img-inner {
+    width: 100%; height: 100%;
+    transition: transform 0.5s ease;
+  }
+  .room-card:hover .room-img-inner { transform: scale(1.05); }
+  .room-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--coral);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+  }
+  .room-info { padding: 1.5rem; }
+  .room-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ocean);
+    margin-bottom: 0.5rem;
+  }
+  .room-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+  .room-amenities {
+    display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.2rem;
+  }
+  .amenity-tag {
+    font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--sand); color: var(--text-muted);
+    padding: 0.25rem 0.6rem;
+  }
+  .room-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--sand-dark); padding-top: 1rem;
+  }
+  .room-price { font-family: var(--font-display); font-size: 1.4rem; font-weight: 400; color: var(--ocean); }
+  .room-price span { font-family: var(--font-body); font-size: 0.75rem; color: var(--text-muted); }
+  .btn-room {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--coral); border: 1px solid var(--coral);
+    background: transparent; padding: 0.5rem 1.1rem; cursor: pointer;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn-room:hover { background: var(--coral); color: var(--white); }
+
+  /* ROOM VISUAL GRADIENTS */
+  .room-ocean { background: linear-gradient(135deg, #1a4a5c 0%, #2a6b82 40%, #7ec8d8 100%); }
+  .room-sunset { background: linear-gradient(135deg, #c96a3a 0%, #e8845a 50%, #f5c4a0 100%); }
+  .room-garden { background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5c 50%, #a8d4b0 100%); }
+
+  /* EXPERIENCES */
+  .experiences { background: var(--ocean); padding: 6rem 3rem; }
+  .exp-inner { max-width: 1200px; margin: 0 auto; }
+  .exp-inner .section-eyebrow { color: var(--coral-light); }
+  .exp-inner .section-title { color: var(--white); }
+  .exp-inner .section-body { color: rgba(255,255,255,0.65); }
+  .exp-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem;
+  }
+  .exp-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 2rem 1.5rem;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .exp-item:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+  .exp-icon {
+    font-size: 2rem; margin-bottom: 1rem; display: block;
+  }
+  .exp-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem; font-weight: 400;
+    color: var(--white); margin-bottom: 0.5rem;
+  }
+  .exp-desc { font-size: 0.8rem; line-height: 1.7; color: rgba(255,255,255,0.55); }
+
+  /* BOOKING FORM */
+  .booking-section { background: var(--sand); }
+  .booking-inner {
+    max-width: 900px; margin: 0 auto;
+    text-align: center;
+  }
+  .booking-form {
+    background: var(--white);
+    border: 1px solid var(--sand-dark);
+    padding: 3rem;
+    margin-top: 3rem;
+    text-align: left;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    border: 1px solid var(--sand-dark);
+    background: var(--white);
+    padding: 0.8rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--ocean-light);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    text-align: center; margin-top: 2rem;
+  }
+  .form-note {
+    font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--white); }
+  .test-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+  .test-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem;
+  }
+  .test-card {
+    background: var(--sand);
+    padding: 2rem;
+    text-align: left;
+    position: relative;
+  }
+  .test-quote {
+    font-family: var(--font-display);
+    font-size: 4rem; line-height: 1;
+    color: var(--coral); opacity: 0.3;
+    margin-bottom: -1rem;
+  }
+  .test-text {
+    font-family: var(--font-display);
+    font-size: 1rem; font-style: italic;
+    line-height: 1.8; color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .test-author { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .test-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.6);
+    padding: 4rem 3rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.8rem; font-weight: 300;
+    color: var(--white); margin-bottom: 1rem;
+  }
+  .footer-tagline { font-size: 0.82rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  .footer-col h4 {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul li a {
+    font-size: 0.82rem; color: rgba(255,255,255,0.6);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .footer-col ul li a:hover { color: var(--coral-light); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white); max-width: 500px; width: 90%;
+    padding: 2.5rem; position: relative;
+    animation: modalIn 0.3s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1.2rem;
+    font-size: 1.5rem; cursor: pointer; color: var(--text-muted);
+    background: none; border: none; line-height: 1;
+  }
+  .modal-title { font-family: var(--font-display); font-size: 1.8rem; color: var(--ocean); margin-bottom: 0.5rem; }
+  .modal-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .modal-success { text-align: center; padding: 1rem 0; }
+  .modal-success .check { font-size: 3rem; margin-bottom: 1rem; }
+  .modal-success h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--ocean); margin-bottom: 0.5rem; }
+  .modal-success p { font-size: 0.85rem; color: var(--text-muted); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav.scrolled { padding: 0.8rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-visual { height: 300px; }
+    .rooms-grid { grid-template-columns: 1fr; }
+    .exp-grid { grid-template-columns: 1fr 1fr; }
+    .test-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .booking-bar { flex-direction: column; align-items: stretch; gap: 0; padding: 1rem 1.5rem; }
+    .booking-field { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); padding: 0.8rem 0; }
+    .btn-search { margin-left: 0; margin-top: 1rem; width: 100%; }
+    .hero-cta { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Seabreeze</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#booking" class="nav-book">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <svg class="hero-waves" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" fill="#fdfaf7" opacity="0.15"/>
+    <path d="M0,80 C360,40 720,100 1080,60 C1260,40 1380,70 1440,80 L1440,120 L0,120 Z" fill="#fdfaf7"/>
+  </svg>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Phuket, Thailand</p>
+    <h1 class="hero-title">Seabreeze<br><em>Resort</em></h1>
+    <p class="hero-sub">Where the Andaman meets tranquility</p>
+    <div class="hero-cta">
+      <a href="#booking" class="btn-primary">Reserve Your Stay</a>
+      <a href="#rooms" class="btn-outline">Explore Rooms</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING BAR -->
+<div class="booking-bar">
+  <div class="booking-field">
+    <label>Check In</label>
+    <input type="date" id="checkin">
+  </div>
+  <div class="booking-field">
+    <label>Check Out</label>
+    <input type="date" id="checkout">
+  </div>
+  <div class="booking-field">
+    <label>Guests</label>
+    <select>
+      <option>1 Guest</option>
+      <option selected>2 Guests</option>
+      <option>3 Guests</option>
+      <option>4 Guests</option>
+    </select>
+  </div>
+  <div class="booking-field">
+    <label>Room Type</label>
+    <select>
+      <option>Any Room</option>
+      <option>Ocean View Suite</option>
+      <option>Sunset Villa</option>
+      <option>Garden Retreat</option>
+    </select>
+  </div>
+  <button class="btn-search" onclick="openModal()">Check Availability</button>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual">
+      <div class="about-img-main">
+        <div style="width:100%;height:100%;background:linear-gradient(160deg,#1a4a5c,#4a9ab5 60%,#7ec8d8);position:relative;">
+          <div style="position:absolute;bottom:1.5rem;left:1.5rem;color:white;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;opacity:0.8;">Beachfront views from every room</div>
+        </div>
+      </div>
+      <div class="about-img-accent" style="background:linear-gradient(135deg,#c96a3a,#f5c4a0);"></div>
+      <div class="about-badge">
+        <div class="about-badge-num">15</div>
+        <span class="about-badge-label">Years of Excellence</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="section-eyebrow">Our Story</p>
+      <h2 class="section-title">A sanctuary on<br><em>Phuket's finest shore</em></h2>
+      <p class="section-body">Nestled along a pristine stretch of the Andaman Sea, Seabreeze Resort has welcomed guests seeking an authentic Thai coastal experience since 2009. Every detail — from our sun-drenched terraces to our private beach access — is crafted around the rhythm of the sea.</p>
+      <div class="features">
+        <div class="feature-item"><div class="feature-dot"></div><span class="feature-text">Private beach access</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span class="feature-text">Infinity pool overlooking sea</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span class="feature-text">Award-winning Thai cuisine</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span class="feature-text">Full-service spa & wellness</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span class="feature-text">Water sports & diving</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span class="feature-text">24-hour concierge</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section class="rooms" id="rooms">
+  <div class="rooms-inner">
+    <div class="rooms-header">
+      <p class="section-eyebrow">Accommodations</p>
+      <h2 class="section-title">Rooms & <em>Suites</em></h2>
+      <p class="section-body">Each space is a private retreat, designed to bring the outside in — from floor-to-ceiling ocean views to private plunge pools.</p>
+    </div>
+    <div class="rooms-grid">
+      <div class="room-card">
+        <div class="room-img">
+          <div class="room-img-inner room-ocean"></div>
+          <span class="room-badge">Most Popular</span>
+        </div>
+        <div class="room-info">
+          <h3 class="room-name">Ocean View Suite</h3>
+          <p class="room-desc">Wake to panoramic Andaman views. King bed, private balcony, and a rain shower with ocean-facing glass walls.</p>
+          <div class="room-amenities">
+            <span class="amenity-tag">King Bed</span>
+            <span class="amenity-tag">Ocean View</span>
+            <span class="amenity-tag">Balcony</span>
+            <span class="amenity-tag">40 m²</span>
+          </div>
+          <div class="room-footer">
+            <div class="room-price">฿4,500 <span>/ night</span></div>
+            <a href="#booking" class="btn-room">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="room-card">
+        <div class="room-img">
+          <div class="room-img-inner room-sunset"></div>
+          <span class="room-badge">Premium</span>
+        </div>
+        <div class="room-info">
+          <h3 class="room-name">Sunset Villa</h3>
+          <p class="room-desc">A private villa with your own plunge pool, open-air sala, and front-row seats to Phuket's legendary sunsets.</p>
+          <div class="room-amenities">
+            <span class="amenity-tag">Private Pool</span>
+            <span class="amenity-tag">Sunset View</span>
+            <span class="amenity-tag">Sala</span>
+            <span class="amenity-tag">75 m²</span>
+          </div>
+          <div class="room-footer">
+            <div class="room-price">฿8,200 <span>/ night</span></div>
+            <a href="#booking" class="btn-room">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="room-card">
+        <div class="room-img">
+          <div class="room-img-inner room-garden"></div>
+          <span class="room-badge" style="background:var(--ocean)">Peaceful</span>
+        </div>
+        <div class="room-info">
+          <h3 class="room-name">Garden Retreat</h3>
+          <p class="room-desc">Tucked among tropical gardens, a serene double room with natural materials and access to all resort facilities.</p>
+          <div class="room-amenities">
+            <span class="amenity-tag">Double Bed</span>
+            <span class="amenity-tag">Garden View</span>
+            <span class="amenity-tag">Quiet</span>
+            <span class="amenity-tag">28 m²</span>
+          </div>
+          <div class="room-footer">
+            <div class="room-price">฿2,800 <span>/ night</span></div>
+            <a href="#booking" class="btn-room">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="experiences" id="experiences">
+  <div class="exp-inner">
+    <p class="section-eyebrow">Curated For You</p>
+    <h2 class="section-title">Resort <em>Experiences</em></h2>
+    <p class="section-body" style="color:rgba(255,255,255,0.65)">From dawn yoga on the beach to sunset cocktail cruises — we craft moments you'll carry home.</p>
+    <div class="exp-grid">
+      <div class="exp-item">
+        <span class="exp-icon">🤿</span>
+        <h3 class="exp-name">Diving & Snorkelling</h3>
+        <p class="exp-desc">Explore vibrant coral reefs and crystal-clear Andaman waters with our PADI-certified instructors.</p>
+      </div>
+      <div class="exp-item">
+        <span class="exp-icon">🧘</span>
+        <h3 class="exp-name">Beachfront Yoga</h3>
+        <p class="exp-desc">Start each morning with guided yoga sessions on our private beach as the sun rises over the sea.</p>
+      </div>
+      <div class="exp-item">
+        <span class="exp-icon">🍜</span>
+        <h3 class="exp-name">Thai Cooking Class</h3>
+        <p class="exp-desc">Learn to craft authentic Thai dishes with our head chef, using fresh ingredients from local markets.</p>
+      </div>
+      <div class="exp-item">
+        <span class="exp-icon">⛵</span>
+        <h3 class="exp-name">Sunset Cruise</h3>
+        <p class="exp-desc">Private longtail boat charter around the bay — champagne, fresh fruit, and Phuket's golden hour.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="test-inner">
+    <p class="section-eyebrow">Guest Stories</p>
+    <h2 class="section-title">What guests <em>say</em></h2>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <p class="test-text">The most beautiful resort we've ever stayed at. Waking up to the sound of waves and that view — completely unforgettable.</p>
+        <div class="test-stars">★★★★★</div>
+        <div class="test-author">Sarah & James T. — London, UK</div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <p class="test-text">The staff made us feel like family. Every request was met with a smile. We're already planning our return trip.</p>
+        <div class="test-stars">★★★★★</div>
+        <div class="test-author">Priya M. — Singapore</div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <p class="test-text">The Sunset Villa was worth every baht. Private pool, incredible food, and the most peaceful week of my life.</p>
+        <div class="test-stars">★★★★★</div>
+        <div class="test-author">Marcus W. — Melbourne, AU</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="booking-section" id="booking">
+  <div class="booking-inner">
+    <p class="section-eyebrow">Reserve Your Stay</p>
+    <h2 class="section-title">Book <em>Direct</em> & Save 10%</h2>
+    <p class="section-body" style="margin:0 auto;text-align:center">Best rates guaranteed when you book directly with us. No hidden fees, free cancellation up to 48 hours before arrival.</p>
+    <div class="booking-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Your first name">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Your last name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+66 or international">
+        </div>
+        <div class="form-group">
+          <label>Check-in Date</label>
+          <input type="date">
+        </div>
+        <div class="form-group">
+          <label>Check-out Date</label>
+          <input type="date">
+        </div>
+        <div class="form-group">
+          <label>Room Type</label>
+          <select>
+            <option value="">Select a room</option>
+            <option>Ocean View Suite — ฿4,500/night</option>
+            <option>Sunset Villa — ฿8,200/night</option>
+            <option>Garden Retreat — ฿2,800/night</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Number of Guests</label>
+          <select>
+            <option>1 Guest</option>
+            <option selected>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4 Guests</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Special Requests</label>
+          <textarea placeholder="Dietary requirements, special occasions, accessibility needs..."></textarea>
+        </div>
+      </div>
+      <div class="form-submit">
+        <button class="btn-primary" style="padding:1rem 3rem;font-size:0.85rem;" onclick="submitBooking()">Confirm Reservation</button>
+        <p class="form-note">You will receive a confirmation email within 2 hours. No payment required at this stage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Seabreeze Resort</div>
+      <p class="footer-tagline">A beachfront sanctuary on Phuket's Andaman coast. Where every stay becomes a story worth telling.</p>
+      <p style="font-size:0.8rem;">📍 123 Kata Beach Road, Phuket 83100</p>
+      <p style="font-size:0.8rem;margin-top:0.3rem;">📞 +66 76 123 456</p>
+      <p style="font-size:0.8rem;margin-top:0.3rem;">✉️ hello@seabreezeresort.com</p>
+    </div>
+    <div class="footer-col">
+      <h4>Resort</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#rooms">Rooms & Suites</a></li>
+        <li><a href="#experiences">Experiences</a></li>
+        <li><a href="#">Dining</a></li>
+        <li><a href="#">Spa & Wellness</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Plan</h4>
+      <ul>
+        <li><a href="#booking">Book Direct</a></li>
+        <li><a href="#">Getting Here</a></li>
+        <li><a href="#">Weddings & Events</a></li>
+        <li><a href="#">Travel Agents</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">TripAdvisor</a></li>
+        <li><a href="#">Newsletter</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Seabreeze Resort. All rights reserved.</span>
+    <span>Privacy Policy · Terms & Conditions</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modalContent">
+      <h2 class="modal-title">Check Availability</h2>
+      <p class="modal-sub">We'll confirm your dates and send options within 2 hours.</p>
+      <div class="form-grid" style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Preferred Room</label>
+          <select>
+            <option>Ocean View Suite</option>
+            <option>Sunset Villa</option>
+            <option>Garden Retreat</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <button class="btn-primary" style="width:100%;padding:1rem;font-size:0.85rem;" onclick="submitModal()">Send Enquiry</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const today = new Date().toISOString().split('T')[0];
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+  document.getElementById('checkin').value = today;
+  document.getElementById('checkout').value = tomorrow;
+
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+  function submitModal() {
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-success">
+        <div class="check">✓</div>
+        <h3>Enquiry Sent!</h3>
+        <p>We'll check availability and get back to you within 2 hours. Thank you for choosing Seabreeze Resort.</p>
+      </div>`;
+    setTimeout(closeModal, 3000);
+  }
+  function submitBooking() {
+    alert('Reservation received! You will get a confirmation email shortly. Thank you for booking with Seabreeze Resort.');
+  }
+</script>
+
+</body>
+</html>
