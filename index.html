@@ -642,7 +642,7 @@ footer {
         <div class="price-tag-pill">Most Popular</div>
         <div class="price-name">Booking Site</div>
         <div class="price-desc">Everything in Starter, plus a direct booking form so guests skip Agoda.</div>
-        <div class="price-amount">฿3,000</div>
+        <div class="price-amount">฿5,500</div>
         <div class="price-period">one-time payment · delivered in 7 days</div>
         <div class="price-divider"></div>
         <ul class="price-features">
@@ -659,7 +659,7 @@ footer {
         <div class="price-tag-pill">Custom</div>
         <div class="price-name">Custom Build</div>
         <div class="price-desc">Need something more specific? Multi-language, larger site, or special features.</div>
-        <div class="price-amount">฿4,500+</div>
+        <div class="price-amount">฿8,000+</div>
         <div class="price-period">custom quote · timeline varies</div>
         <div class="price-divider"></div>
         <ul class="price-features">
@@ -693,7 +693,7 @@ footer {
       <div class="addon-box">
         <div class="addon-box-name">Thai Language Version</div>
         <div class="addon-box-sub">Full site translated to Thai</div>
-        <div class="addon-box-price">฿500</div>
+        <div class="addon-box-price">฿800</div>
       </div>
     </div>
 
@@ -731,7 +731,7 @@ footer {
         </div>
         <div class="contact-line">
           <span class="contact-line-icon">💬</span>
-          <span>WhatsApp: +66 95-621-6821</span>
+          <a href="https://wa.me/66956216821">WhatsApp: +66 95-621-6821</a>
         </div>
         <div class="contact-line">
           <span class="contact-line-icon">📍</span>
@@ -801,7 +801,7 @@ footer {
         <ul>
           <li><a href="#how">How it works</a></li>
           <li><a href="#examples">Examples</a></li>
-    <li><a href="#about">About</a></li>
+          <li><a href="#about">About</a></li>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -841,7 +841,6 @@ footer {
     const btn = document.querySelector('.form-submit-btn');
     const inputs = document.querySelectorAll('#formBody input, #formBody select, #formBody textarea');
     
-    // Basic validation
     let valid = true;
     inputs.forEach(input => {
       if (input.hasAttribute('required') || input.type === 'email') {
@@ -849,7 +848,6 @@ footer {
       }
     });
 
-    // Collect form data
     const data = {};
     inputs.forEach(input => {
       if (input.name || input.placeholder) {
