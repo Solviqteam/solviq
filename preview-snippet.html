@@ -1,0 +1,30 @@
+<!--
+  PREVIEW-MODE SNIPPET — paste these lines just before </head> and/or at the end of <body>
+  of the client's draft page while you are sharing it for review. Remove this whole block at launch.
+-->
+<meta name="robots" content="noindex, nofollow">
+<style>
+  #solviq-preview-banner {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
+    background: #111; color: #fff; text-align: center;
+    font: 600 13px/1.4 -apple-system, system-ui, sans-serif;
+    letter-spacing: 0.06em; padding: 10px 12px;
+  }
+  #solviq-preview-watermark {
+    position: fixed; inset: 0; z-index: 99998; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    font: 700 8vw/1 -apple-system, system-ui, sans-serif;
+    color: rgba(0,0,0,0.06); transform: rotate(-30deg);
+    white-space: nowrap; letter-spacing: 0.1em;
+  }
+</style>
+<div id="solviq-preview-banner">PREVIEW - not yet published. Not for use or copying.</div>
+<div id="solviq-preview-watermark">SOLVIQ PREVIEW</div>
+<script>
+  document.querySelectorAll('form').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Form disabled in preview');
+    });
+  });
+</script>
