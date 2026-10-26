@@ -54,6 +54,13 @@ nav.scrolled {
 .nav-links a:hover { color: var(--ink); }
 .nav-cta { background: var(--ink); color: white; font-family: var(--body); font-size: 0.8rem; font-weight: 500; padding: 0.55rem 1.3rem; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s; letter-spacing: -0.01em; }
 .nav-cta:hover { background: #2a2a28; }
+.nav-toggle { display: none; align-items: center; justify-content: center; flex-direction: column; gap: 4px; width: 40px; height: 40px; padding: 0; background: transparent; border: 1px solid var(--border-strong); cursor: pointer; }
+.nav-toggle span { display: block; width: 18px; height: 2px; background: var(--ink); transition: transform 0.25s, opacity 0.25s; }
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.nav-mobile-cta { display: none; }
+nav.menu-open { background: var(--bg); border-color: var(--border); }
 
 .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 2.5rem 5rem; position: relative; overflow: hidden; }
 .hero-grid-bg {
@@ -188,6 +195,13 @@ section { padding: 6rem 2.5rem; }
 .fg textarea { resize: vertical; min-height: 110px; }
 .form-submit-btn { width: 100%; background: var(--ink); color: white; font-family: var(--body); font-size: 0.85rem; font-weight: 500; padding: 0.9rem; border: none; cursor: pointer; transition: background 0.2s; letter-spacing: -0.01em; }
 .form-submit-btn:hover { background: #2a2a28; }
+.form-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.fg input.invalid, .fg select.invalid, .fg textarea.invalid { border-color: #c0392b; background: var(--white); }
+.field-error { display: none; font-size: 0.7rem; color: #c0392b; line-height: 1.4; margin-top: 0.1rem; }
+.field-error.visible { display: block; }
+.form-error { display: none; font-size: 0.78rem; color: #c0392b; line-height: 1.5; margin: 0 0 0.8rem; }
+.form-error.visible { display: block; }
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-note { font-size: 0.72rem; color: var(--ink-3); text-align: center; margin-top: 0.8rem; }
 .form-success { display: none; text-align: center; padding: 3rem 1rem; }
 .form-success.visible { display: block; }
@@ -208,7 +222,6 @@ footer { background: var(--ink); padding: 3rem 2.5rem 2rem; }
 
 @media (max-width: 860px) {
   nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; }
   section { padding: 4rem 1.5rem; }
   .hero { padding: 7rem 1.5rem 4rem; }
   .hero-stats { gap: 2rem; flex-wrap: wrap; }
@@ -225,6 +238,30 @@ footer { background: var(--ink); padding: 3rem 2.5rem 2rem; }
   .form-row { grid-template-columns: 1fr; }
   .footer-links { gap: 2rem; flex-wrap: wrap; }
 }
+
+@media (max-width: 767px) {
+  .nav-toggle { display: flex; }
+  nav > .nav-cta { display: none; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.5rem 1rem;
+    max-height: calc(100vh - 4.5rem);
+    overflow-y: auto;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { display: block; padding: 0.85rem 0; font-size: 0.95rem; }
+  .nav-links .nav-mobile-cta { display: block; margin-top: 0.5rem; }
+  .nav-links .nav-mobile-cta .nav-cta { display: block; text-align: center; padding: 0.75rem 1.3rem; color: white; font-size: 0.8rem; }
+  .nav-links .nav-mobile-cta .nav-cta:hover { color: white; background: #2a2a28; }
+}
 </style>
 </head>
 <body>
@@ -234,14 +271,20 @@ footer { background: var(--ink); padding: 3rem 2.5rem 2rem; }
     <div class="logo-sq">S</div>
     <span class="logo-name">Solviq</span>
   </a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#how">How it works</a></li>
     <li><a href="#examples">Examples</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li class="nav-mobile-cta"><a href="#contact" class="nav-cta">Get a website</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Get a website</a>
+  <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <section class="hero">
@@ -536,23 +579,31 @@ footer { background: var(--ink); padding: 3rem 2.5rem 2rem; }
     </div>
     <div class="contact-form" id="contactForm">
       <div id="formBody">
+        <div class="hp-field" aria-hidden="true">
+          <label for="hp-website">Website</label>
+          <input type="text" id="hp-website" name="_gotcha" tabindex="-1" autocomplete="off">
+        </div>
         <div class="form-row">
           <div class="fg">
-            <label>Your name</label>
-            <input type="text" name="name" placeholder="Full name" required>
+            <label for="field-name">Your name</label>
+            <input id="field-name" type="text" name="name" placeholder="Full name" required aria-describedby="err-name">
+            <p class="field-error" id="err-name" aria-live="polite"></p>
           </div>
           <div class="fg">
-            <label>Property name</label>
-            <input type="text" name="property" placeholder="Your hotel or guesthouse">
+            <label for="field-property">Property name</label>
+            <input id="field-property" type="text" name="property" placeholder="Your hotel or guesthouse" required aria-describedby="err-property">
+            <p class="field-error" id="err-property" aria-live="polite"></p>
           </div>
         </div>
         <div class="fg">
-          <label>Email address</label>
-          <input type="email" name="email" placeholder="you@example.com" required>
+          <label for="field-email">Email address</label>
+          <input id="field-email" type="email" name="email" placeholder="you@example.com" aria-describedby="err-email">
+          <p class="field-error" id="err-email" aria-live="polite"></p>
         </div>
         <div class="fg">
-          <label>WhatsApp / Line</label>
-          <input type="tel" name="whatsapp" placeholder="+66 or +60 number">
+          <label for="field-whatsapp">WhatsApp / Line</label>
+          <input id="field-whatsapp" type="tel" name="whatsapp" placeholder="+66 or +60 number" aria-describedby="err-whatsapp">
+          <p class="field-error" id="err-whatsapp" aria-live="polite"></p>
         </div>
         <div class="fg">
           <label>Which package interests you?</label>
@@ -569,7 +620,8 @@ footer { background: var(--ink); padding: 3rem 2.5rem 2rem; }
           <textarea name="message" placeholder="How many rooms? Location? What do you need most?"></textarea>
         </div>
         <p class="form-note" style="text-align:left;margin-top:0;margin-bottom:1rem;">By submitting this form you agree to Solviq contacting you about your enquiry and storing your details for that purpose. See my <a href="privacy.html" style="color:var(--accent);text-decoration:none;font-weight:500;">Privacy Notice</a>.</p>
-        <button class="form-submit-btn" onclick="submitForm()">Send enquiry →</button>
+        <p class="form-error" id="formError" aria-live="polite"></p>
+        <button class="form-submit-btn" type="button" onclick="submitForm()">Send enquiry →</button>
         <p class="form-note">I respond within 24 hours. No payment required at this stage.</p>
       </div>
       <div class="form-success" id="formSuccess">
@@ -633,17 +685,119 @@ footer { background: var(--ink); padding: 3rem 2.5rem 2rem; }
     nav.classList.toggle('scrolled', window.scrollY > 50);
   });
 
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  function setMenu(open) {
+    navLinks.classList.toggle('open', open);
+    nav.classList.toggle('menu-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+
+  navToggle.addEventListener('click', () => {
+    setMenu(!navLinks.classList.contains('open'));
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMenu(false));
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+      setMenu(false);
+      navToggle.focus();
+    }
+  });
+
+  const desktopQuery = window.matchMedia('(min-width: 768px)');
+  desktopQuery.addEventListener('change', event => {
+    if (event.matches) setMenu(false);
+  });
+
+  const formBody = document.getElementById('formBody');
+  const submitBtn = document.querySelector('.form-submit-btn');
+  const honeypot = document.querySelector('.hp-field input');
+  const nameInput = formBody.querySelector('[name="name"]');
+  const propertyInput = formBody.querySelector('[name="property"]');
+  const emailInput = formBody.querySelector('[name="email"]');
+  const whatsappInput = formBody.querySelector('[name="whatsapp"]');
+  const formFields = [nameInput, propertyInput, emailInput, whatsappInput];
+
+  function setFieldError(input, message) {
+    const error = document.getElementById('err-' + input.name);
+    input.classList.toggle('invalid', Boolean(message));
+    input.setAttribute('aria-invalid', message ? 'true' : 'false');
+    error.textContent = message;
+    error.classList.toggle('visible', Boolean(message));
+  }
+
+  function collectErrors() {
+    const values = {
+      name: nameInput.value.trim(),
+      property: propertyInput.value.trim(),
+      email: emailInput.value.trim(),
+      whatsapp: whatsappInput.value.trim()
+    };
+    const errors = { name: '', property: '', email: '', whatsapp: '' };
+
+    if (!values.name) errors.name = 'Please enter your name.';
+    if (!values.property) errors.property = 'Please enter your property name.';
+    if (!values.email && !values.whatsapp) {
+      const message = 'Enter an email address or a WhatsApp/Line number.';
+      errors.email = message;
+      errors.whatsapp = message;
+    } else if (values.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+      errors.email = 'Please enter a valid email address.';
+    }
+
+    return { values, errors };
+  }
+
+  function showFormError(message) {
+    const formError = document.getElementById('formError');
+    formError.textContent = message;
+    formError.classList.toggle('visible', Boolean(message));
+  }
+
+  formFields.forEach(input => {
+    input.addEventListener('input', () => {
+      const { errors } = collectErrors();
+      formFields.forEach(field => {
+        const error = document.getElementById('err-' + field.name);
+        if (error.classList.contains('visible')) {
+          setFieldError(field, errors[field.name]);
+        }
+      });
+    });
+  });
+
   async function submitForm() {
-    const btn = document.querySelector('.form-submit-btn');
-    const inputs = document.querySelectorAll('#formBody input, #formBody select, #formBody textarea');
+    if (submitBtn.disabled) return;
+    showFormError('');
+
+    if (honeypot.value.trim()) return;
+
+    const { errors } = collectErrors();
+    formFields.forEach(field => setFieldError(field, errors[field.name]));
+
+    const firstInvalid = formFields.find(field => errors[field.name]);
+    if (firstInvalid) {
+      firstInvalid.focus();
+      return;
+    }
+
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+
     const data = {};
-    inputs.forEach(input => {
+    formBody.querySelectorAll('input, select, textarea').forEach(input => {
+      if (input === honeypot) return;
       if (input.name || input.placeholder) {
         data[input.placeholder || input.name] = input.value;
       }
     });
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
+
     try {
       const response = await fetch('https://formspree.io/f/mnjwbkyp', {
         method: 'POST',
@@ -651,17 +805,17 @@ footer { background: var(--ink); padding: 3rem 2.5rem 2rem; }
         body: JSON.stringify(data)
       });
       if (response.ok) {
-        document.getElementById('formBody').style.display = 'none';
+        formBody.style.display = 'none';
         document.getElementById('formSuccess').classList.add('visible');
       } else {
-        btn.textContent = 'Send enquiry →';
-        btn.disabled = false;
-        alert('Something went wrong. Please email me directly at solviq.team@outlook.com');
+        submitBtn.textContent = 'Send enquiry →';
+        submitBtn.disabled = false;
+        showFormError('Something went wrong. Please email me directly at solviq.team@outlook.com');
       }
     } catch (err) {
-      btn.textContent = 'Send enquiry →';
-      btn.disabled = false;
-      alert('Something went wrong. Please email me directly at solviq.team@outlook.com');
+      submitBtn.textContent = 'Send enquiry →';
+      submitBtn.disabled = false;
+      showFormError('Something went wrong. Please email me directly at solviq.team@outlook.com');
     }
   }
 </script>
