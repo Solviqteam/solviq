@@ -803,9 +803,10 @@
 <!-- BOOKING FORM -->
 <section class="booking-section" id="booking">
   <div class="booking-inner">
-    <p class="section-eyebrow">Reserve Your Stay</p>
-    <h2 class="section-title">Book <em>Direct</em> & Save 10%</h2>
-    <p class="section-body" style="margin:0 auto;text-align:center">Best rates guaranteed when you book directly with us. No hidden fees, free cancellation up to 48 hours before arrival.</p>
+    <p class="section-eyebrow">Request your stay</p>
+    <h2 class="section-title">Book <em>Direct</em></h2>
+    <p class="section-body" style="margin:0 auto;text-align:center">Send a request and the hotel will confirm availability and rates.</p>
+    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">Sample demo content.</p>
     <div class="booking-form">
       <div class="form-grid">
         <div class="form-group">
@@ -856,8 +857,8 @@
         </div>
       </div>
       <div class="form-submit">
-        <button class="btn-primary" style="padding:1rem 3rem;font-size:0.85rem;" onclick="submitBooking()">Confirm Reservation</button>
-        <p class="form-note">You will receive a confirmation email within 2 hours. No payment required at this stage.</p>
+        <button class="btn-primary" style="padding:1rem 3rem;font-size:0.85rem;" onclick="submitBooking()">Send booking request</button>
+        <p class="form-note">This is a request, not a confirmed booking. No payment is taken on this form.</p>
       </div>
     </div>
   </div>
@@ -917,7 +918,7 @@
     <button class="modal-close" onclick="closeModal()">×</button>
     <div id="modalContent">
       <h2 class="modal-title">Check Availability</h2>
-      <p class="modal-sub">We'll confirm your dates and send options within 2 hours.</p>
+      <p class="modal-sub">Send a request and the hotel will reply to confirm availability.</p>
       <div class="form-grid" style="display:flex;flex-direction:column;gap:1rem;">
         <div class="form-group">
           <label>Full Name</label>
@@ -970,12 +971,12 @@
       <div class="modal-success">
         <div class="check">✓</div>
         <h3>Enquiry Sent!</h3>
-        <p>DEMO ONLY - nothing was sent or booked. We'll check availability and get back to you within 2 hours. Thank you for choosing Seabreeze Resort.</p>
+        <p>DEMO ONLY - nothing was sent or booked. Send a request and the hotel will reply to confirm availability.</p>
       </div>`;
     setTimeout(closeModal, 3000);
   }
   function submitBooking() {
-    alert('DEMO ONLY - nothing was sent or booked. Reservation received! You will get a confirmation email shortly. Thank you for booking with Seabreeze Resort.');
+    alert('DEMO ONLY: nothing was sent. On a live site, your request would go to the hotel and they would reply to confirm availability.');
   }
 </script>
 
